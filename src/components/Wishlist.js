@@ -94,7 +94,7 @@ const productlist = [
   return (
     <div className='container-ecom  p-2'>
       <div className='col-12'><p className='side-heading'>My Wishlist {`(2 items)`}</p> </div>
-      <div className="col-12 d-flex">
+      <div className="col-12 d-flex gap-3">
       {productlist?.map((product) => (<>
         <div key={product.id} className="col-lg-3 col-md-4 product-list-lg-md">
           <div className="productItem">

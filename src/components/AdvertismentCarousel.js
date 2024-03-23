@@ -55,8 +55,8 @@ const [error, setError] = useState(null);
   };
 
   return (
-    <div className="container-ecom h-auto">
-    <Slider {...settings} className="carouselImage ">
+    <div className="container-ecom">
+    <Slider {...settings} className="carouselImage">
       {carouselData?.advertisment.map((image) => (
         <div key={image.id}>
                <img  

@@ -94,7 +94,7 @@ const settings = {
 };
 
 function onImageClick(item){
-  navigate('/product-list', { state: { item} });
+  navigate('/women-product-list', { state: { item} });
 }
 
 return (

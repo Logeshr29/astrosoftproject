@@ -17,7 +17,8 @@ const apiConfig = {
   productlist:'/productlist',
   productdetails:'/productdetails',
   carousel:'/adverstimentcarousel',
-  product:'/products'
+  product:'/products',
+  wishlist:'/wishlist'
 };
 
 export default apiConfig;

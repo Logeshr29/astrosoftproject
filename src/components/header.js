@@ -98,9 +98,11 @@ import Offcanvasoverlay from './Offcanvasoverlay.js';
 import LoginForm from './LoginForm.js';
 import { FaCartPlus, FaHeart, FaRegHeart, FaRegUser, FaSearch } from 'react-icons/fa';
 import { IoSearchSharp } from "react-icons/io5";
+import { CgProfile } from "react-icons/cg";
 import { Accordion, Col, Dropdown, DropdownItem, Row } from 'react-bootstrap';
 import apiService from '../services/axiosService.js';
 import apiConfig from '../services/apiConfig.js';
+
 
 export default function Header({ hideCarousel }){
   const navigate = useNavigate();
@@ -140,7 +142,7 @@ export default function Header({ hideCarousel }){
       navigate('/kids-categories');
     }
     if (eventKey === "men") {
-      navigate('/categories');
+      navigate('/mencategories');
     }
   };
   const [activeTab, setActiveTab] = useState('');
@@ -167,6 +169,7 @@ export default function Header({ hideCarousel }){
     console.log(item);
     setfcid(item?.id);
   }
+  
   useEffect(()=>
   {
     console.log(genderid)
@@ -217,7 +220,7 @@ export default function Header({ hideCarousel }){
   return (  
     gender &&
     <>
-    <div className="header-bar mb-2">
+    <div className="header-bar mb-2 pt-lg-0">
     <div className="col-dir-tab d-none d-lg-flex">
       <div className="d-flex">
       <div className='col-8 d-flex'>
@@ -241,59 +244,63 @@ export default function Header({ hideCarousel }){
             <Container fluid >
               <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} className='d-flex d-lg-none' />
 
-              <Navbar.Brand className='fa-2x p-0' href="/">2K Tribes </Navbar.Brand>
+              <Navbar.Brand className='p-0' href="/">2K Tribes </Navbar.Brand>
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-${expand}`}
                 aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
                 placement="start"
               >
-                <Offcanvas.Header closeButton>
+                <Offcanvas.Header className='pb-2 mt-3' closeButton>
                   <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                    Logesh R 
-                   
+                  <div className='profile-offcanvas'><CgProfile/> Logesh R </div>                
                   </Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body className='' >
+                <Offcanvas.Body  >
                    <div className={"seperator mb-3 seperatorExtra"}></div>
-                   <div className="col-dir-tab1 d-lg-none">
-                      <Tabs
-                        defaultActiveKey="men"
-                        id="justify-tab-example"
-                        bsPrefix="nav nav-type1 "
-                        fill
-                        onSelect={handleTabSelect}
-                      >
-                        <Tab eventKey="men" title="MEN" ></Tab>
-                        <Tab eventKey="women" title="WOMEN"></Tab>
-                        <Tab eventKey="kids"  title="KIDS"></Tab>
-                        
-                      </Tabs>
-                    </div>
+                   <div className="col-dir-tab d-flex d-lg-none">
+      <div className="col-12 d-flex justify-content-evenly">
+        {gender?.gender.map((item,index)=>(
+          <div key={item.id} id='cityName' className={`tab w-100 ${activeTab===(item.gender)? "active":" "} `} onClick={(e)=>opencategory(item,e)}>
+      <button 
+        className="tablinks w-100"
+        title={item.gender}
+        
+      >
+       {item.gender}
+      </button> 
+       </div>))}
+    </div>
+      </div>
                   {category?.categories.map((prod,index)=>
                   <div key={prod.id}>
                   <div  className='nav-container '>
                     <ul  className='nav-list d-none d-lg-flex '>
                       <li>
                       <NavDropdown
-                   className="heart-icon-lg m-0 "
-                  onClick={()=>handlecatid(prod.id)}
+                    bsPrefix='cat_heading'
                     title={prod.category}
                     >
-                   <NavDropdown.Item    className="heart-icon-lg">{prod.category}</NavDropdown.Item>
+                   <NavDropdown.Item    className="heart-icon-lg" > {prod?.fandom_item.map((fandom)=>
+                          <div key={fandom.id}>
+                            <div  className="side-heading">{fandom?.fandom.name}</div>
+                            <span onClick={()=>handlecatid(prod.id)} className={"font-body ht-01"}>{fandom.name}</span>
+                          </div>)}</NavDropdown.Item>
                   </NavDropdown>
                   </li>
                     </ul>
                   </div>
                  <div className="nav-container ">
                  <ul className='nav-list d-lg-none '>
-                  <li className='col-12'>
+                  <li key={prod.id} className='col-12'>
                       <Accordion className="product_detail_accordion1" defaultActiveKey="0">
                       <Accordion.Item eventKey={index}>
-                        <Accordion.Header onClick={()=>openfc(prod)}>{prod.category}</Accordion.Header>
+                        <Accordion.Header>{prod.category}</Accordion.Header>
                         <Accordion.Body>
-                          <div>
-                            <span className={"font-body ht-01"}>vvvvkjblknmq34gr54wjazgmmlkmlk</span>
-                          </div>
+                          {prod?.fandom_item.map((fandom)=>
+                          <div key={fandom.id}>
+                            <div  className="side-heading">{fandom?.fandom.name}</div>
+                            <span  onClick={()=>openfc(prod)} className={"font-body ht-01"}>{fandom.name}</span>
+                          </div>)}
                         </Accordion.Body>
                       </Accordion.Item>
                       </Accordion></li>
@@ -354,7 +361,24 @@ export default function Header({ hideCarousel }){
                         
         </div>     
         </div>
-        <div className="col-dir d-lg-none ">
+        
+        <div className="col-dir d-lg-none">
+      {/* <div  className="float-right background-color-red"  >
+        <div className="d-flex  ">
+      <div className="header-icon mr-3 "          
+
+onClick={(onImageClick)}><img src="img/search.png" alt=""/>
+</div>
+      <div className="header-icon mr-3 "          
+
+onClick={(onImageClick)}><img src="img/shopping-bag.png" alt=""/>
+</div>
+<div className="heart-icon mr-3 "          
+
+onClick={(onImageClick)}><img src="img/heart.png" alt=""/>
+</div>
+      </div></div> */}
+
       <Tabs
       defaultActiveKey="men"
       id="justify-tab-example"
@@ -366,13 +390,13 @@ export default function Header({ hideCarousel }){
       <Tab eventKey="men" title="MEN">
       </Tab>
       <Tab eventKey="women" title="WOMEN">
+       
       </Tab>
       <Tab eventKey="kids" title="KIDS">
       </Tab>
      
     </Tabs>
     </div>
-    
     </>
   );
 }

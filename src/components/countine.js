@@ -479,3 +479,140 @@ fetchcategories();
   );
 }
 
+const product=[
+  {
+  id: 4,
+  product: "naruto classic edition 1",
+  category_id: 5,
+  cloth_type_id: 1,
+  collection_id: 1,
+  colour_id: 1,
+  fandom_id: 2,
+  fandomcategory_id: 4,
+  stock: 15,
+  gst: 5,
+  price: 300,
+  sale_price: 200,
+  discount: 100,
+  manufactuerd: "1",
+  description1: "g,uuliskhydglkfysaltus",
+  description2: "fhslskhilotiteahtdsagjhsdj",
+  status: 1,
+  cloth_name: "tshirt",
+  category_name: "themes",
+  fandom_name: "cartoons and comics",
+  collection_name: "oversized",
+  fandom_category_name: "naruto",
+  product_images: 
+  [
+      {
+          id: 11,
+          product_id: 4,
+          image: "1710746958_65f7ed4ee5a60.webp",
+          created_at: "2024-03-18T07:29:18.000000Z",
+          updated_at: "2024-03-18T07:29:18.000000Z",
+          image_path: "http://admin.2ktribes.com/product_images/1710746958_65f7ed4ee5a60.webp"
+      },
+      {
+          id: 12,
+          product_id: 4,
+          image: "1710746958_65f7ed4ee6a49.webp",
+          created_at: "2024-03-18T07:29:18.000000Z",
+          updated_at: "2024-03-18T07:29:18.000000Z",
+          image_path: "http://admin.2ktribes.com/product_images/1710746958_65f7ed4ee6a49.webp"
+      },
+      {
+          id: 13,
+          product_id: 4,
+          image: "1710746958_65f7ed4ee760b.webp",
+          created_at: "2024-03-18T07:29:18.000000Z",
+          updated_at: "2024-03-18T07:29:18.000000Z",
+          image_path: "http://admin.2ktribes.com/product_images/1710746958_65f7ed4ee760b.webp"
+      },
+      {
+          id: 14,
+          product_id: 4,
+          image: "1710746958_65f7ed4ee8117.webp",
+          created_at: "2024-03-18T07:29:18.000000Z",
+          updated_at: "2024-03-18T07:29:18.000000Z",
+          image_path: "http://admin.2ktribes.com/product_images/1710746958_65f7ed4ee8117.webp"
+      }
+  ],
+  product_size: 
+  [
+      {
+          id: 4,
+          product_id: 4,
+          size_id: 1,
+          stock: 15,
+          size: "s"
+      }
+  ]
+},{id: 4,
+  product: "naruto classic edition 1",
+  category_id: 5,
+  cloth_type_id: 1,
+  collection_id: 1,
+  colour_id: 1,
+  fandom_id: 2,
+  fandomcategory_id: 4,
+  stock: 15,
+  gst: 5,
+  price: 300,
+  sale_price: 200,
+  discount: 100,
+  manufactuerd: "1",
+  description1: "g,uuliskhydglkfysaltus",
+  description2: "fhslskhilotiteahtdsagjhsdj",
+  status: 1,
+  cloth_name: "tshirt",
+  category_name: "themes",
+  fandom_name: "cartoons and comics",
+  collection_name: "oversized",
+  fandom_category_name: "naruto",
+  product_images: 
+  [
+      {
+          id: 11,
+          product_id: 4,
+          image: "1710746958_65f7ed4ee5a60.webp",
+          created_at: "2024-03-18T07:29:18.000000Z",
+          updated_at: "2024-03-18T07:29:18.000000Z",
+          image_path: "http://admin.2ktribes.com/product_images/1710746958_65f7ed4ee5a60.webp"
+      },
+      {
+          id: 12,
+          product_id: 4,
+          image: "1710746958_65f7ed4ee6a49.webp",
+          created_at: "2024-03-18T07:29:18.000000Z",
+          updated_at: "2024-03-18T07:29:18.000000Z",
+          image_path: "http://admin.2ktribes.com/product_images/1710746958_65f7ed4ee6a49.webp"
+      },
+      {
+          id: 13,
+          product_id: 4,
+          image: "1710746958_65f7ed4ee760b.webp",
+          created_at: "2024-03-18T07:29:18.000000Z",
+          updated_at: "2024-03-18T07:29:18.000000Z",
+          image_path: "http://admin.2ktribes.com/product_images/1710746958_65f7ed4ee760b.webp"
+      },
+      {
+          id: 14,
+          product_id: 4,
+          image: "1710746958_65f7ed4ee8117.webp",
+          created_at: "2024-03-18T07:29:18.000000Z",
+          updated_at: "2024-03-18T07:29:18.000000Z",
+          image_path: "http://admin.2ktribes.com/product_images/1710746958_65f7ed4ee8117.webp"
+      }
+  ],
+  product_size: 
+  [
+      {
+          id: 4,
+          product_id: 4,
+          size_id: 1,
+          stock: 15,
+          size: "s"
+      }
+  ]
+}]

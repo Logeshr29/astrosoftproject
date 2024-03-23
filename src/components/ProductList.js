@@ -26,7 +26,7 @@ export default function ProductList  () {
   const [priceRange, setPriceRange] = useState([0, 1000]); // Default price range
   const location = useLocation();
   const { state } = location;
-  console.log(state);
+  console.log(state.item.id);
   const settings = {
     dots: false,
     infinite: true,
@@ -39,14 +39,13 @@ export default function ProductList  () {
     
   
   };
-  
 
 
 const [selectedItems, setSelectedItems] = useState([]);
 const [selectedSize,setSelectedSize]=useState([]);
 const [selectGender,setSelectGender]=useState([]);
 const [productlist,setproductlist]=useState(null)
-console.log(productlist)
+
 useEffect(() => {
   console.log(selectedItems, "selected items");
   console.log(selectedSize,"seldetedsize")
@@ -111,10 +110,10 @@ function onImageClick(item){
 
 
 }
-
+console.log(productlist)
 const BottomModal =({isBottomModalOpen,bottomCloseModal})=>{
   return (<> 
-   <div>
+   <div >
     {/* <button onClick={openModal}>Open Modal</button> */}
     <div
       className={`modal-container ${isBottomModalOpen ? 'modal-open' : ''}`}
@@ -368,7 +367,9 @@ const handleHeartClick = () => {
 };
 
 
-    return (<>
+    return (
+      productlist ? (
+<>    
 <div className="container-ecom">
 <img className="product-img-banner" src={productlist?.fandom_category_image_path}/>
 <img className="product-img-banner-small-screen" src={productlist?.fandom_category_image_path}/>
@@ -381,20 +382,24 @@ const handleHeartClick = () => {
         <div className="productItem-sm" style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' }}>
             
         <SlickSlider {...settings}>
-        {product?.product_images.map((product,index)=> 
-        <div key={index} className="productImageContainer">
-         <img  className="sm-product-image" src={product.image_path} alt={"image1"} />
-         <div className="label-sm new">New</div>       
-        <div className="product-heart-sm">
-              <span
-                className={`icon_heart_alt ${isFilled ? 'filled' : ''}`}
-                onClick={handleHeartClick}
-              ></span>
-            </div>
-        </div>  
+        {product?.product_images.map((product,index)=>
+        index<2 &&
+        <div key={index} className="productImageContainer position-relative">
+         <img  className="sm-product-image" src={product.image_path_1}/>
+         <img  className="sm-product-image" src={product.image_path_2}/>
+         <div className="label new">New</div>
+            
+            <div className="product-heart"> 
+                  <span
+                    className={`icon_heart_alt ${isFilled ? 'filled' : ''}`}
+                    onClick={handleHeartClick}
+                  ></span>
+                </div>
+        </div>
           )}
+              
     </SlickSlider>
-   
+    
     <div className="product__item__text">
               <h6>{product.product}</h6>
               <Rating rating={product.rating} />
@@ -402,7 +407,7 @@ const handleHeartClick = () => {
               <div className="price-box-wrapper">
                   <span className="leftPrice">
                     <span className="fprice">
-                      <p className={"iruppee p-2"}>{`₹${product?.price}`} <span className='cancel-amt'>{(product?.price)+(product?.discount)}</span></p>
+                      <p className={"iruppee product__price p-2"}>{`₹${product?.price}`} <span className='cancel-amt'>{(product?.price)+(product?.discount)}</span></p>
                     </span>
                   </span>
                 </div>
@@ -410,6 +415,7 @@ const handleHeartClick = () => {
     
     </div></div>
               </div>
+             
        </>
         ))}
 
@@ -423,7 +429,7 @@ const handleHeartClick = () => {
         <div className="sticky-footer-sm">
           <div className="col-12 w-100 filter-sm">
             <div className="col-6 filter-sm-border">
-            <button type="button" className="btn w-100   lightDark-text card-removeButton text-uppercase"onClick={openModal}>        
+            <button type="button" className="btn w-100   light Dark-text card-removeButton text-uppercase"onClick={openModal}>        
             
             <img className="filter-img-sm" src="https://prod-img.thesouledstore.com/public/theSoul/images/filterIcons/ic_filter.png?format=webp&w=160&dpr=2.0"></img>
            Filter </button>
@@ -624,57 +630,52 @@ const handleHeartClick = () => {
           
           
           ></div>
-      
+
           <div className="row img">
-
-
-
       {productlist?.products.map((product) => (<>
         <div key={product.id} className="col-lg-3 col-md-4 product-list-lg-md">
           <div className="productItem">
             
-            <div className="productImage">
-              {console.log(product)}
-              
-              <div className="productImageContainer " onClick={()=>onImageClick(product)}>
-              {product?.product_images.map((product,index)=>
-                <div key={index} >
-                  <div>
-              <img src={product.image_path} alt={product.name} className="productImage1" />
-              </div>
-              <div>
-          <img src={product.image_path} alt={product.name} className=" productImage1 productImage2" />
-          </div></div>)}
-              <div className="label new">New</div>
-            
-<div className="product-heart"> 
+{/* productlist-lg.................................................... */}
+<div className="productImage d-none d-md-flex" onClick={()=>onImageClick(product)}>
+    {product?.product_images.map((product,index)=>
+        index<2 &&
+              <div key={product.id} className="productImageContainer" >
+              <img src={product.image_path_1} alt={product.name} className="productImage1" />
+          <img src={product.image_path_2} alt={product.name} className="productImage1 productImage2" />
+
+              <div className="label new">New</div>         
+<div className="product-heart">
       <span
         className={`icon_heart_alt ${isFilled ? 'filled' : ''}`}
         onClick={handleHeartClick}
       ></span>
     </div>
               </div>
+    )}
+            </div>
 
           
-            </div>
+            
             <div className="product__item__text">
-              <h6>{product.name}</h6>
+              <h6>{product.product}</h6>
               <Rating rating={product.rating} />
     
-              <div className="product__price">₹ {product.price}</div>
+              <div className="price-box-wrapper">
+                  <span className="leftPrice">
+                    <span className="fprice">
+                      <p className={" product__price p-1"}>{`₹${product?.price}`} <span className='cancel-amt'>{(product?.price)+(product?.discount)}</span></p>
+                    </span>
+                  </span>
+                </div>
+            </div>
             </div>
           </div>
-        </div></>
+        </>
       ))}
 
     </div></div>
 
           
-</div>
-
-
-    </>
-
-      );
-    };
-
+</div></>):<div className='loading'> <div className="circle"></div>loading...</div>
+)};

@@ -33,15 +33,6 @@ const apiService = {
     return axiosService.post(`${apiName}`, data);
   },
 
-  getMethod1: (apiName, genderid) => {
-    console.log(apiName, genderid);
-    console.log(axiosService.baseURL, "baseurlee");
-
-    // Append genderid as a query parameter
-    const urlWithQuery = `${apiName}/${genderid}`;
-    console.log(urlWithQuery)
-    return axiosService.get(urlWithQuery);
-},
   getMethod: (apiName) => {
     return axiosService.get(`${apiName}`);
   },

@@ -2,8 +2,15 @@ import React, { useEffect, useState } from 'react'
 import apiService from '../services/axiosService';
 import apiConfig from '../services/apiConfig';
 import Rating from './Rating';
+import { CloseButton } from 'react-bootstrap';
+import Slider  from 'rc-slider';
+import SlickSlider from 'react-slick';
+import { useNavigate} from 'react-router-dom';
 
 const Wishlist = () => {
+  const navigate =useNavigate()
+  const [wishlist,setwishlist]=useState(JSON.parse(localStorage.getItem('wishlist'))||[])
+  const [cart,setcartitem]=useState(JSON.parse(localStorage.getItem('items'))||[])
 /*     const [productlist,setproductlist]=useState(null)
 console.log(productlist)
 useEffect(() => {
@@ -20,145 +27,135 @@ useEffect(() => {
       }
       fetchproductlist();
 }, []); */
-const productlist = [  
-    {
-      id: 5,
-      name: 'Product 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      price: 19.99,
-      image:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1667547108_4535010.jpg?format=webp&w=300&dpr=1.3',
+const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  prevArrow: false, // Hide the default previous arrow
+  nextArrow: false, // Hide the default next arrow
+  
 
-      image2:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1667547108_8442187.jpg?format=webp&w=300&dpr=1.3',
-      rating: 4.8
-    }, {
-      id: 6,
-      name: 'Product 6',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      price: 19.99,
-      image:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1657992255_4455089.jpg?format=webp&w=300&dpr=1.3',
-      image2:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1657992255_6491239.jpg?format=webp&w=300&dpr=1.3',
-      rating: 5
-    }, {
-      id: 7,
-      name: 'Product 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      price: 19.99,
-      image:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1690272612_6144137.jpg?format=webp&w=300&dpr=1.3',
-      image2:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1690272612_3112132.jpg?format=webp&w=300&dpr=1.3',
-      rating: 4.5
-    }, {
-      id: 8,
-      name: 'Product 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      price: 19.99,
-      image:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1663334679_4986522.jpg?format=webp&w=300&dpr=1.3',
-      image2:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1678880539_4908910.jpg?format=webp&w=300&dpr=1.3',
-      rating: 4.5
-    },
-    {
-      id: 1,
-      name: 'Product 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      price: 19.99,
-      image:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1687593804_7455230.jpg?format=webp&w=300&dpr=1.3',
-      image2:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1686843455_6771127.jpg?format=webp&w=300&dpr=1.3',
-      rating: 4.5
-    },
-    {
-        id: 2,
-        name: 'Product 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        price: 19.99,
-        image:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1687593650_8595869.jpg?format=webp&w=300&dpr=1.3',
-        image2:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1685428941_4205814.jpg?format=webp&w=300&dpr=1.3',
-        rating: 3
-      }, {
-        id: 3,
-        name: 'Product 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        price: 19.99,
-        image:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1687593851_6398798.jpg?format=webp&w=300&dpr=1.3',
-        image2:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1685618791_2907350.jpg?format=webp&w=300&dpr=1.3',
-        rating:3.5
-      }, {
-        id: 4,
-        name: 'Product 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        price: 19.99,
-        image:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1682751894_3133823.jpg?format=webp&w=300&dpr=1.3',
-        image2:'https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1651127113_4855483.jpg?format=webp&w=300&dpr=1.3',
-        rating: 4
-      }
+};
 
-];
+const addtoCart=(item)=>{
+  console.log(item,"item");
+  const Product = [...cart,item];
+  localStorage.setItem("items",JSON.stringify(Product))
+  if(Product)
+    {
+      setcartitem(Product);
+     alert("product added to cart")
+    }
+    else
+    {
+      alert ("please login")
+    }
+}
+const removewishlist=(productid)=>
+{
+  const product=JSON.parse(localStorage.getItem("wishlist"))
+  const removeprod=product.filter(product=> product.id!=productid)
+  setwishlist(removeprod) 
+  localStorage.setItem("wishlist",JSON.stringify(removeprod))
+}
+function onImageClick(item){
+  console.log("hellobabay");
+  navigate('/product-detail',{ state: { item }});
+
+
+}
+const indexprod=wishlist.length
   return (
-    <div className='container-ecom  p-2'>
-      <div className='col-12'><p className='side-heading'>My Wishlist {`(2 items)`}</p> </div>
-      <div className="col-12 d-flex gap-3">
-      {productlist?.map((product) => (<>
+    <div className='container-cart  p-2'>
+      <div className='col-12'><p className='side-heading'>My Wishlist {`(${indexprod} items)`}</p> </div>
+      <div class="sm-product" >
+        {wishlist?.map((product) => (<> <div key={product.id} className= "product-list-sm">
+        <div  >
+        <div className="productItem-sm" style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' }}>
+            
+        <SlickSlider {...settings}>
+        {product?.product_images.map((product,index)=>
+        index<2 &&
+        <div key={index} className="productImageContainer position-relative">
+           <div className="closebutton z-2" ><CloseButton onClick={()=>removewishlist(product.id)}/></div>
+         <img  className="sm-product-image" src={product.image_path} onClick={()=>onImageClick(product)}/>
+         <div className="label new">New</div>
+        </div>
+       
+
+          )}
+              
+    </SlickSlider>
+    <div className="product__item__text">
+              <h6>{product.product}</h6>
+              <Rating rating={product.rating} />
+    
+              <div className="price-box-wrapper">
+                  <span className="leftPrice">
+                    <span className="fprice">
+                      <p className={"iruppee product__price p-2"}>{`₹${product?.price}`} <span className='cancel-amt'>{(product?.price)+(product?.discount)}</span></p>
+                    </span>
+                  </span>
+                </div>
+                <div className="movebutton" onClick={()=>addtoCart(product)}>
+<span>Move to Cart</span>
+</div> 
+            </div>
+    
+    </div></div>
+              </div>
+             
+       </>
+        ))}
+        </div>
+
+{/* productlist-lg.................................................... */}
+        <div className="row img d-none d-md-flex">
+      {wishlist?.map((product) => (<>
         <div key={product.id} className="col-lg-3 col-md-4 product-list-lg-md">
           <div className="productItem">
             
-            <div className="productImage">
-              {console.log(product)}
-              
-              <div className="productImageContainer ">
-
-                <div>
-                  <div>
-              <img src={product.image} alt={product.name} className="productImage1" />
+{/* productlist-lg.................................................... */}
+<div className="productImage " >
+    {product?.product_images.map((product,index)=>
+        index<2 &&
+              <div key={product.id} className="productImageContainer" onClick={()=>onImageClick(product)}>
+              <img src={product.image_path} alt={product.name} className="productImage1" />
+          <img src={product.image_path} alt={product.name} className="productImage1 productImage2" />
               </div>
-              <div>
-          <img src={product.image} alt={product.name} className=" productImage1 productImage2" />
-          </div></div>
-              <div className="label new">New</div>
-            
-              </div>
-
-          
+    )}
+              <div className="closebutton" onClick={()=>removewishlist(product.id)}><CloseButton/></div>
             </div>
             <div className="product__item__text">
-              <h6>{product.name}</h6>
+              <h6>{product.product}</h6>
               <Rating rating={product.rating} />
     
-              <div className="product__price">₹ {product.price}</div>
+              <div className="price-box-wrapper">
+                  <span className="leftPrice">
+                    <span className="fprice">
+                      <p className={" product__price p-1"}>{`₹${product?.price}`} <span className='cancel-amt'>{(product?.price)+(product?.discount)}</span></p>
+                    </span>
+                  </span>
+                </div>
+                <div className="movebutton" onClick={()=>addtoCart(product)}>
+<span>Move to Cart</span>
+</div> 
+            </div>
             </div>
           </div>
-        </div></>
-      ))}{productlist?.map((product) => (<>
-        <div key={product.id} className="col-lg-3 col-md-4 product-list-lg-md">
-          <div className="productItem">
-            
-            <div className="productImage">
-              {console.log(product)}
-              
-              <div className="productImageContainer ">
-              
-                <div >
-                  <div>
-              <img src={product.image} alt={product.name} className="productImage1" />
-              </div>
-              <div>
-          <img src={product.image} alt={product.name} className=" productImage1 productImage2" />
-          </div></div>
-              <div className="label new">New</div>
-        
-              </div>
-
-          
-            </div>
-            <div className="product__item__text">
-              <h6>{product.name}</h6>
-              <Rating rating={product.rating} />
-    
-              <div className="product__price">₹ {product.price}</div>
-            </div>
-          </div>
-        </div></>
+        </>
       ))}
-      </div>
+
+    </div>
     </div>
   )
 }
 
 export default Wishlist
+{/* <div className="movebutton" onClick={()=>addtoCart(product)}>
+<span>Move to Cart</span>
+</div> */}
+{/* <div className="closebutton" onClick={()=>removewishlist(product.id)}><CloseButton/></div> */}

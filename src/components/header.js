@@ -115,61 +115,11 @@ export default function Header({ hideCarousel }){
   const [genderid,setgenderid]=useState('1')
   const [fcid,setfcid]=useState(null)
   const [fid,setfid]=useState(null)
-
-
- 
-
-  const openCart = () => {
-    navigate('/cart');
-  };
-  const openwhishlist = () => {
-    navigate('/wishlist');
-  };
- const onImageClick=(e)=>{
-    console.log(e.target.title)
-    navigate(`/${e.target.title}`);
-  }
-
-  const handleTabSelect = (eventKey) => {
-    console.log(`Selected tab: ${eventKey}`);
-    if (eventKey === "women") {
-      navigate('/WomenCategories');
-    }
-    if (eventKey === "Login") {
-      navigate('/loginform');
-    }
-    if (eventKey === "kids") {
-      navigate('/kids-categories');
-    }
-    if (eventKey === "men") {
-      navigate('/mencategories');
-    }
-  };
+  const [user,setuser]=useState(JSON.parse(sessionStorage.getItem('user')))
   const [activeTab, setActiveTab] = useState('');
   const [categoryid,setcategoryid] = useState('');
   const [fandomcategoryid,setfandomcategoryid] = useState('1');
 
-
-  const opencategory = (item,e) => {
-    console.log(setActiveTab(e.target.title));
-    setgenderid(item?.id);
-    navigate(`/${item.gender}categories`)
-  }
- const  handlecatid=(item)=>
- {
-  console.log(item)
-  if(item)
-    setcategoryid(item)
- }
- const handlefandomcatid=(item)=>
- {
-  setfandomcategoryid(item)
- }
-  const openfc = (item) => {
-    console.log(item);
-    setfcid(item?.id);
-  }
-  
   useEffect(()=>
   {
     console.log(genderid)
@@ -217,6 +167,68 @@ export default function Header({ hideCarousel }){
   fetchcategories();
   
   },[genderid,categoryid,fandomcategoryid]);
+
+  const openCart = () => {
+    navigate('/cart');
+  };
+  const openwhishlist = () => {
+    navigate('/wishlist');
+  };
+ const onImageClick=(e)=>{
+    console.log(e.target.title)
+    navigate(`/${e.target.title}`);
+  }
+
+  const handleTabSelect = (eventKey) => {
+    console.log(`Selected tab: ${eventKey}`);
+    if (eventKey === "women") {
+      navigate('/WomenCategories');
+    }
+    if (eventKey === "Login") {
+      navigate('/loginform');
+    }
+    if (eventKey === "kids") {
+      navigate('/kids-categories');
+    }
+    if (eventKey === "men") {
+      navigate('/mencategories');
+    }
+  };
+
+
+  const opencategory = (item,e) => {
+    console.log(setActiveTab(e.target.title));
+    setgenderid(item?.id);
+    navigate(`/${item.gender}categories`)
+  }
+ const  handlecatid=(item)=>
+ {
+  console.log(item)
+  if(item)
+    setcategoryid(item)
+ }
+ const handlefandomcatid=(item)=>
+ {
+  setfandomcategoryid(item)
+ }
+  const openfc = (item) => {
+    console.log(item);
+    setfcid(item?.id);
+  }
+  const Login=()=>{
+    if(!user){
+    const login=prompt("enter the user id")
+    setuser(login)
+    sessionStorage.setItem("user",JSON.stringify(login))}
+    else{
+      alert("already logged in")
+    }
+  }
+  const Logout=()=>{
+    setuser(sessionStorage.removeItem("user"))
+    
+  }
+ 
   return (  
     gender &&
     <>
@@ -274,10 +286,10 @@ export default function Header({ hideCarousel }){
                   {category?.categories.map((prod,index)=>
                   <div key={prod.id}>
                   <div  className='nav-container '>
-                    <ul  className='nav-list d-none d-lg-flex '>
+                    <ul  className="nav-list d-none d-lg-flex">
                       <li>
                       <NavDropdown
-                    bsPrefix='cat_heading'
+                    bsPrefix='cat_heading '
                     title={prod.category}
                     >
                    <NavDropdown.Item    className="heart-icon-lg" > {prod?.fandom_item.map((fandom)=>
@@ -333,8 +345,9 @@ export default function Header({ hideCarousel }){
                   <NavDropdown
                    className="heart-icon-lg m-0 "
                     title={<FaRegUser title='User'/>}>
-                   <NavDropdown.Item as={Link} to="/Login"  className="heart-icon-lg">Login</NavDropdown.Item>
+                   <NavDropdown.Item as={Link} to=""  className="heart-icon-lg" onClick={()=>Login()}>Login</NavDropdown.Item>
                    <NavDropdown.Item as={Link} to="/profile"  className="heart-icon-lg">Profile</NavDropdown.Item>
+                   <NavDropdown.Item as={Link} to=""  className="heart-icon-lg" onClick={()=>Logout()}>Logout</NavDropdown.Item>
                   </NavDropdown>
                   <div  className="heart-icon-lg" ><FaCartPlus title='cart'  onClick={openCart}/></div>
                   <div  className="heart-icon-lg" ><FaRegHeart title='wishlist' onClick={openwhishlist} /></div>

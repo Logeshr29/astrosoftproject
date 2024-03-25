@@ -14,18 +14,6 @@ const [error, setError] = useState(null);
 
   useEffect(() => {
     function fetchData  () {
-      console.log("hello1");
-      const CATEGORY = '/api/category';
-      const carousel = '/api/adverstimentcarousel';
-  
-      console.log(apiConfig.CATEGORY);
-  
-      // apiService.getMethod(apiConfig.CATEGORY)
-      // .then(response => {
-      //     console.log(response.data);
-      //     setCategoryData(response.data);
-      //   })
-      console.log(apiConfig.carousel,"carouylsee");
         apiService.getMethod(apiConfig.carousel)
         .then(response => {
           console.log(response.data);
@@ -34,11 +22,7 @@ const [error, setError] = useState(null);
         .catch(error => {
           setError(error);
         });
-    };
-    console.log(carouselData,"caruousess");
-  
-
-    
+    };   
     fetchData();
   }, []);
 

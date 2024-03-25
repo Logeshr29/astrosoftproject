@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import AdvertismentCarousel from './AdvertismentCarousel';
 import apiService from '../services/axiosService';
 import apiConfig from '../services/apiConfig';
+import Cart from './Cart';
 
 
 function Categories({ onImageClick,hideCarousel}) {
@@ -207,7 +208,7 @@ return ( Fandomcategory  && collections ?
   </div> 
   
   <div className=" category-larg ">
-  {categorys?.map((prod, index) => (
+  {category?.map((prod, index) => (
       (index <= 2) && (
         <div className="bx col-4" key={prod.id}>
           <div className="tilethumb">
@@ -218,7 +219,7 @@ return ( Fandomcategory  && collections ?
         </div>
       )
     ))}
-  {categorys?.map((prod, index) => (
+  {category?.map((prod, index) => (
       (index >= 3 && index <= 6) && (
         <div className="bx col-3" key={prod.id}>
           <div className="tilethumb">
@@ -229,7 +230,7 @@ return ( Fandomcategory  && collections ?
         </div>
       )
     ))}
-      {categorys?.map((prod, index) => (
+      {category?.map((prod, index) => (
       (index >=7 && index <= 9) && (
         <div className="bx col-4" key={prod.id}>
           <div className="tilethumb">
@@ -240,7 +241,7 @@ return ( Fandomcategory  && collections ?
         </div>
       )
     ))}
-    {categorys?.map((prod, index) => (
+    {category?.map((prod, index) => (
       (index >= 10) && (
         <div className="bx col-3" key={prod.id}>
           <div className="tilethumb">
@@ -258,7 +259,7 @@ return ( Fandomcategory  && collections ?
    <div className="newarrival-container-title">
    <h3 className="title">Categories</h3></div>
  <Slider {...settings}>
-   {categorys?.map((category, index) => (
+   {category?.map((category, index) => (
      <div key={index} className="fandomImage1 p-2">
        <img   onClick={()=>[onImageClick(category),hideCarousel]}  src={category.image_path} alt={"category"} />
      </div>

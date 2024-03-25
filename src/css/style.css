@@ -5566,6 +5566,9 @@ ul.nav-type.nav-fill::after
 	.product-list-sm{
 		width:50% !important;
 	}
+	.product-list-sm1{
+		width:50% !important;
+	}
 
 	.container-cart
 	{
@@ -5700,6 +5703,9 @@ ul.nav-type.nav-fill::after
 	  display: inline-block;
 	}
 	.product-list-sm{
+		width:50% !important;
+	}
+	.product-list-sm1{
 		width:50% !important;
 	}
 	.canvas__open {
@@ -5846,6 +5852,9 @@ ul.nav-type.nav-fill::after
 	.product-list-sm{
 		width:33% !important;
 	}
+	.product-list-sm1{
+		width:33% !important;
+	}
 	.coupens-lg
 	{
 		columns: 12;
@@ -5901,11 +5910,11 @@ ul.nav-type.nav-fill::after
 	display: flex;
 	padding-left:0px;
 	line-height:3;
-	justify-content: start;
+	justify-content:center;
 	cursor: pointer;
 	margin-bottom: 0;
 	list-style: none;
-	font-size:17px;
+	font-size:10px;
 	font-weight: 500;
 	text-transform: uppercase;
     }
@@ -5950,6 +5959,9 @@ ul.nav-type.nav-fill::after
 	}
 	.product-list-sm{
 		width:25% !important;
+	}
+	.product-list-sm1{
+		width:33% !important;
 	}
 	.side-heading {
 		margin-top: 20px;
@@ -6041,15 +6053,17 @@ ul.nav-type.nav-fill::after
 	}
 	.cat_heading 
 	{
+		display: block;
 	   cursor: pointer;
 	   text-decoration: none;
 	   color: black;
-	   margin-bottom: 0;
+	   margin-bottom:0;
 	   list-style: none;
-	   font-size:clamp(5px,4vw, 16px);
+	   font-size:clamp(5px,4vw, 15px);
 	   font-weight: 500;
 	   text-transform: uppercase;
 	}
+	
 	.prod-cart p{
 		color:#4c4c4c;
 		font-family:'Source Sans Pro', sans-serif;
@@ -6108,6 +6122,9 @@ ul.nav-type.nav-fill::after
 	}
 	.product-list-sm{
 		width:20% !important;
+	}
+	.product-list-sm1{
+		width:30% !important;
 	}
 	.offcanvas-body
 	{
@@ -6265,6 +6282,9 @@ ul.nav-type.nav-fill::after
 	.product-list-sm{
 		width:30% !important;
 	}
+	.product-list-sm1{
+		width:30% !important;
+	}
 	.product-detail-sm img
 	{
 		display: block;
@@ -6376,25 +6396,6 @@ ul.nav-type.nav-fill::after
 	}
 }
 
-/* Medium Device = 1200px */
-
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-	.header__menu ul li {
-		margin-right: 20px;
-	}
-	.header__right__auth {
-		margin-right: 5px;
-	}
-	.sidebar__filter a {
-		padding: 5px 15px 5px 15px;
-	}
-	.nav::before {
-		width: 240px;
-	}
-	.nav::after {
-		width: 240px;
-	}
-}
 
 /* Tablet Device = 768px */
 

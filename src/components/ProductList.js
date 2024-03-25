@@ -45,6 +45,8 @@ const [selectedItems, setSelectedItems] = useState([]);
 const [selectedSize,setSelectedSize]=useState([]);
 const [selectGender,setSelectGender]=useState([]);
 const [productlist,setproductlist]=useState(null)
+const [user,setuser]=useState(JSON.parse(sessionStorage.getItem('user')))
+const [wishlist,setwishlist]=useState(JSON.parse(localStorage.getItem('wishlist'))||[])
 
 useEffect(() => {
   console.log(selectedItems, "selected items");
@@ -366,6 +368,47 @@ const handleHeartClick = () => {
   setIsFilled(!isFilled);
 };
 
+const addwishlist=(item)=>{
+  console.log(item)
+  console.log(productlist)
+  const newitem = productlist.products.filter((product) => item.product_id=== product.id);
+  console.log(newitem);
+
+  if(!user)
+  {
+
+    const userid=prompt("enter the user id")
+    if(userid)
+    {
+      const cartprod = {
+        userid: userid,
+        product: [ ...newitem],
+      };
+    setuser(userid)
+    sessionStorage.setItem("user",JSON.stringify(userid))
+    wishlist.push(cartprod);
+    setwishlist(wishlist)
+    localStorage.setItem("wishlist",JSON.stringify(wishlist))
+    if(wishlist)
+    alert(`product added to wishlist of user ${user}`)
+    }
+    else
+    {
+      alert("please enter the user id")  
+    }
+  }
+  else{
+    const cartprod = {
+      userid: user,
+      product: [ ...newitem],
+    };
+  wishlist.push(cartprod);
+  setwishlist(wishlist)
+  localStorage.setItem("wishlist",JSON.stringify(wishlist))
+  if(wishlist)
+  alert(` product added to wishlist of user${user}`)
+  }
+};
 
     return (
       productlist ? (
@@ -376,7 +419,7 @@ const handleHeartClick = () => {
 </div>
 
 <div className="container-ecom">
-<div class="sm-product" >
+<div className="sm-product" >
         {productlist?.products.map((product) => (<> <div key={product.id} className= "product-list-sm">
         <div  onClick={()=>onImageClick(product)}>
         <div className="productItem-sm" style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' }}>
@@ -392,7 +435,7 @@ const handleHeartClick = () => {
             <div className="product-heart"> 
                   <span
                     className={`icon_heart_alt ${isFilled ? 'filled' : ''}`}
-                    onClick={handleHeartClick}
+                    onClick={() => addwishlist(product)}
                   ></span>
                 </div>
         </div>
@@ -645,10 +688,10 @@ const handleHeartClick = () => {
           <img src={product.image_path_2} alt={product.name} className="productImage1 productImage2" />
 
               <div className="label new">New</div>         
-<div className="product-heart">
-      <span
+      <div className="product-heart">
+            <span
         className={`icon_heart_alt ${isFilled ? 'filled' : ''}`}
-        onClick={handleHeartClick}
+        onClick={() => addwishlist(product)}
       ></span>
     </div>
               </div>

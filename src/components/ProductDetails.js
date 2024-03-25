@@ -183,43 +183,52 @@ useEffect(() => {
       };
       
       
-      const addtoCart=(item)=>{
-        console.log(item,"item");
-        item.size=selectedSize;
-        console.log(item,"tiems");
-        const Product = [...cart,item?.products];
-        if(!user)
-        {
-
-          const userid=prompt("enter the user id")
-          if(userid)
-          {
-          setuser(userid)
-          sessionStorage.setItem("user",JSON.stringify(userid))
-          
-          setcartitem(Product)
-          localStorage.setItem("items",JSON.stringify(Product))
-          if(cart)
-          alert(" product added to cart")
+      const addtoCart = (item) => {
+        console.log(item, "item");
+        item.size = selectedSize;
+        console.log(item, "item with size");
+      
+        // Initialize cart as an empty array if it's null or undefined
+      
+        if (!user) {
+          const userid = prompt("Enter the user id");
+          if (userid) {
+            const cartprod = {
+              userid: userid,
+              product: [{ ...item.products}],
+            };
+            setuser(userid);
+            sessionStorage.setItem("user", JSON.stringify(userid));
+            cart.push(cartprod);
+            setcartitem(cart);
+            localStorage.setItem("items", JSON.stringify(cart));
+            alert(`Product added to cart of user${user}`);
+          } else {
+            alert("Please enter the user id");
           }
-          else
+        }else
           {
-            setcartitem(Product)
-            localStorage.setItem("items",JSON.stringify(Product))
-            alert("please enter the user id")
-            
+          const cartprod = {
+            userid: user,
+            product: [{ ...item.products}],
+          };
+          const productalready = cart.some(
+            (cartItem) =>
+              cartItem.userid === user && cartItem.product[0].id === cartprod.product[0].id
+          );
+          if (productalready) {
+            alert("The product is already in the cart");
+          } 
+              else
+              { 
+                cart.push(cartprod); // Add new cart product to the updated cart array
+                setcartitem(cart);
+                localStorage.setItem("items", JSON.stringify(cart));
+                alert(`Product added to cart of user${user}`);
+              }
+            }
           }
-        }
-        else{
-          setcartitem(Product)
-          localStorage.setItem("items",JSON.stringify(Product))
-          if(cart)
-          alert(" product added to cart")
-        }
-       
-        
-      }
-
+      
       function addtoCart1(item){
         setSizeAlert(true);
 
@@ -238,27 +247,33 @@ useEffect(() => {
           const userid=prompt("enter the user id")
           if(userid)
           {
+            const cartprod = {
+              userid: userid,
+              product: [{...item}],
+            };
           setuser(userid)
           sessionStorage.setItem("user",JSON.stringify(userid))
-          
-          setwishlist(Product)
-          localStorage.setItem("wishlist",JSON.stringify(Product))
-          if(cart)
-          alert(" product added to wishlist")
+          wishlist.push(cartprod);
+          setwishlist(wishlist)
+          localStorage.setItem("wishlist",JSON.stringify(wishlist))
+          if(wishlist)
+          alert(`product added to wishlist of user ${user}`)
           }
           else
           {
-            setwishlist(Product)
-            localStorage.setItem("wishlist",JSON.stringify(Product))
-            alert("please enter the user id")
-            
+            alert("please enter the user id")  
           }
         }
         else{
-          setwishlist(Product)
-          localStorage.setItem("wishlist",JSON.stringify(Product))
-          if(cart)
-          alert(" product added to wishlist")
+          const cartprod = {
+            userid: user,
+            product: [{ ...item}],
+          };
+        wishlist.push(cartprod);
+        setwishlist(wishlist)
+        localStorage.setItem("wishlist",JSON.stringify(wishlist))
+        if(wishlist)
+        alert(` product added to wishlist of user${user}`)
         }
       };
       
@@ -433,68 +448,67 @@ useEffect(() => {
 <div className={"seperator mb-1 seperatorExtra mt-4"}></div>
 <div className="col-12"><span className='side-heading'>Similar Products</span></div>
 <div className="">
-<div class="d-flex flex-wrap">
-        {productlist ?.products.map((product) => (<> <div key={product.id} className= "product-list-sm">
-        <div  onClick={()=>onImageClick(product)}>
-        <div className="productItem-sm " style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' }}>
-          {/* productlist-sm............................................ */}  
-        <SlickSlider {...settings} className='d-md-none '>
-
-        {product?.product_images.map((product,index)=>
-        index<2 &&
-        <div key={index} className="productImageContainer position-relative">
-         <img  className="sm-product-image" src={product.image_path_1}/>
-         <img  className="sm-product-image" src={product.image_path_2}/>
-         <div className="label new">New</div>
-         
-            <div className="product-heart"> 
-                  <span
-                    className={`icon_heart_alt ${isFilled ? 'filled' : ''}`}
-                    onClick={() => addwishlist(productdetail)}
-                  ></span>
+  <div className="d-flex col-12 flex-wrap">
+    {productlist?.products.map((product) => (
+      <div key={product.id} className="product-list-sm p-md-2">
+        <div onClick={() => onImageClick(product)}>
+          <div className="productItem-sm" style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' }}>
+            {/* productlist-sm */}
+            <SlickSlider {...settings} className='d-lg-none'>
+              {product?.product_images.map((product, index) =>
+                index < 2 &&
+                <div key={index} className="productImageContainer position-relative">
+                  <img className="sm-product-image" src={product.image_path_1} />
+                  <img className="sm-product-image" src={product.image_path_2} />
+                  <div className="label new">New</div>
+                  <div className="product-heart">
+                    <span
+                      className={`icon_heart_alt ${isFilled ? 'filled' : ''}`}
+                      onClick={() => addwishlist(productdetail)}
+                    ></span>
+                  </div>
                 </div>
-                </div>
-          )}         
-    </SlickSlider>
-
-{/* productlist-lg.................................................... */}
-    <div className="productImage d-none d-md-flex">
-    {product?.product_images.map((product,index)=>
-        index<2 &&
-              <div className="productImageContainer" onClick={()=>onImageClick(product)}>
-              <img src={product.image_path_1} alt={product.name} className="productImage1" />
-          <img src={product.image_path_2} alt={product.name} className="productImage1 productImage2" />
+              )}
+            </SlickSlider>
           </div>
-    )}
-              <div className="label new">New</div>         
-<div className="product-heart">
-      <span
-        className={`icon_heart_alt ${isFilled ? 'filled' : ''}`}
-        onClick={() => addwishlist(productdetail)}
-      ></span>
-    </div>
-             
+          {/* productlist-lg */}
+          <div className="productImage d-none d-md-flex">
+            {product?.product_images.map((product, index) =>
+              index < 2 &&
+              <div key={index} className="productImageContainer " onClick={() => onImageClick(product)}>
+                <img src={product.image_path_1} alt={product.name} className="productImage1" />
+                <img src={product.image_path_2} alt={product.name} className="productImage1 productImage2" />
+              </div>
+            )}
+            <div className="label new">New</div>
+            <div className="product-heart">
+              <span
+                className={`icon_heart_alt ${isFilled ? 'filled' : ''}`}
+                onClick={() => addwishlist(product)}
+              ></span>
             </div>
-{/* productlist info ........................................... */}
-    <div className="product__item__text">
-              <h6>{product.product}</h6>
-              <Rating rating={product.rating} />
-    
-              <div className="price-box-wrapper">
-                  <span className="leftPrice">
-                    <span className="fprice">
-                      <p className={"iruppee product__price p-2"}>{`₹${product?.price}`} <span className='cancel-amt'>{(product?.price)+(product?.discount)}</span></p>
-                    </span>
-                  </span>
-                </div></div>  
-         <button className={'-5 sm-close-button'}>
-          Add Now
-        </button></div>
-              </div>
-              </div>
-       </>
-        ))}
-        </div></div>
+          </div>
+          {/* productlist info */}
+          <div className="product__item__text">
+            <h6>{product.product}</h6>
+            <Rating rating={product.rating} />
+            <div className="price-box-wrapper">
+              <span className="leftPrice">
+                <span className="fprice">
+                  <p className={"iruppee product__price p-2"}>{`₹${product?.price}`} <span className='cancel-amt'>{(product?.price) + (product?.discount)}</span></p>
+                </span>
+              </span>
+            </div>
+            <button className={'-5 sm-close-button'}>
+              Add Now
+            </button>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
 
 
       <div className="sticky-footer-sm">
@@ -529,8 +543,8 @@ useEffect(() => {
                    </button>
               </div>
 
-          </div>
-  </div></div>: <div className="loader"></div>
+          </div></div>
+  </div>: <div className="loader"></div>
 );
             } 
 

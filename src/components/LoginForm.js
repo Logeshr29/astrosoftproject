@@ -59,7 +59,7 @@ const LoginForm=()=>{
    <div className="container-ecom">
     <div className="container ">
 
-      <div className="login-container">
+      <div className="login-container d-flex justify-content-center">
    <Formik
        initialValues={{
         
@@ -69,7 +69,7 @@ const LoginForm=()=>{
        validationSchema={validationSchema}
        onSubmit={loginsubmit}
      >
-       <div className="d-inline-block">
+       <div className=" login-cont ">
         <div className="login-text"><span >Login</span></div>
        <Form  className='login-form  '>
         {usernameerror &&(<><div className=" colored">Invalid UserName or Password</div></>)}

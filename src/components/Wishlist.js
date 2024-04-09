@@ -58,7 +58,7 @@ const addtoCart=(item)=>{
       if (userid) {
         const cartprod = {
           userid: userid,
-          product: [{ ...item}],
+          product: [{ ...item.product[0]}],
         };
         setuser(userid);
         sessionStorage.setItem("user", JSON.stringify(userid));
@@ -72,7 +72,7 @@ const addtoCart=(item)=>{
     } else {
       const cartprod = {
         userid: user,
-        product: [{ ...item}],
+        product: [{ ...item.product[0]}],
       };
       cart.push(cartprod); // Add new cart product to the updated cart array
       setcartitem(cart);
@@ -94,8 +94,10 @@ function onImageClick(item){
 
 }
 const indexprod=wishlist.length
-  return (
-    <div className='container-cart p-2'>
+  return (<>{(!wishlist || wishlist==[]) ? <div className='col-12'>
+  <p className='side-heading'>My Wishlist ({indexprod} items)</p>
+</div>:
+    <div className='container-cart p-2'> 
     <div className='col-12'>
       <p className='side-heading'>My Wishlist ({indexprod} items)</p>
     </div>
@@ -110,8 +112,8 @@ const indexprod=wishlist.length
                     <div className="closebutton z-2">
                       <CloseButton onClick={() => removewishlist(product.product[0].id)} />
                     </div>
-                    <img className="sm-product-image" src={image.image_path_1} onClick={() => onImageClick(product)} />
-                    <img className="sm-product-image" src={image.image_path_2} onClick={() => onImageClick(product)} />
+                    <img className="sm-product-image" src={image.image_path_1|| image.image_path} onClick={() => onImageClick(product)} />
+                    <img className="sm-product-image" src={image.image_path_2|| image.image_path} onClick={() => onImageClick(product)} />
                     <div className="label new">New</div>
                   </div>
                 )
@@ -144,8 +146,8 @@ const indexprod=wishlist.length
               {product?.product[0].product_images.map((image, idx) =>
                 idx < 2 && (
                   <div key={image.id} className="productImageContainer" onClick={() => onImageClick(product)}>
-                    <img src={image.image_path_1} alt={image.name} className="productImage1" />
-                    <img src={image.image_path_2} alt={image.name} className="productImage1 productImage2" />
+                    <img src={image.image_path_1 || image.image_path} alt={image.name} className="productImage1" />
+                    <img src={image.image_path_2 || image.image_path} alt={image.name} className="productImage1 productImage2" />
                   </div>
                 )
               )}
@@ -171,7 +173,7 @@ const indexprod=wishlist.length
         </div>
       ))}
     </div>
-  </div>
+  </div>}</>
   )
 }
 

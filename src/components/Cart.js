@@ -66,13 +66,14 @@ export default function Cart() {
         const quantity = item.quantity || 1; 
         totalAmount += salePrice * quantity;
         const gst = item.product[0].gst ||1;
-        setgstamount(totalAmount/gst)
+        const gstamt=Math.round(totalAmount/gst)
+        setgstamount(gstamt)
       }); 
       setcarttotal(totalAmount);  
     }
 
     const fetchcart = () => {
-      const usercart = items.filter(item => user == item.userid);
+      const usercart = items.filter(item => user === item.userid);
       setItems([...usercart]); 
     };
     fetchcart()
@@ -82,14 +83,23 @@ export default function Cart() {
   const removebutton=(item)=>
   {
     const product=JSON.parse(localStorage.getItem("items"))
-    const removeprod=product.filter(product=> product.product[0].id!=item.product[0].id)
-    setItems(removeprod.filter((item)=>item.userid==user))
-    localStorage.setItem("items", JSON.stringify(removeprod));
+    const removeprod=product.filter(product=> !((product.userid==item.userid)&&(product.product[0].id==item.product[0].id)))
+    setItems(removeprod); 
+    const usercart = removeprod.filter(item => user ===item.userid);
+    setItems(usercart); 
+    localStorage.setItem("items", JSON.stringify( removeprod))
+    
   }
-  const totalremovebutton=()=>
-  {
-    setItems(localStorage.removeItem("items"))
-  }
+
+
+    const totalremovebutton = () => {
+      const updatedItems =JSON.parse(localStorage.getItem("items")).filter(item => user !== item.userid);
+      console.log(updatedItems)
+      const usercart = updatedItems.filter(item => user ===item.userid);
+      setItems(usercart); 
+      localStorage.setItem("items", JSON.stringify(updatedItems));
+    }
+
  
   const ArrowButton = ({ type, onClick }) => {
     return (
@@ -108,8 +118,8 @@ export default function Cart() {
     prevArrow: <ArrowButton type="prev" onClick={() => sliderRef.current.slickPrev()} />,
   };
 
-  const handleHeartClick = () => {
-    setIsFilled(!isFilled);
+  const handleshopping = () => {
+    navigate(`/mencategories`)
   };
 console.log(selectedQty)
   const handleQtyClick = (id) => {
@@ -143,19 +153,47 @@ console.log(selectedQty)
     navigate('/product-detail', { state: { item } });
   
   }
-  const addwishlist=(item)=>{
-    const cartprod = {
-      userid: user,
-      product: [{ ...item}],
-    };
-  wishlist.push(cartprod);
-  setwishlist(wishlist)
-  localStorage.setItem("wishlist",JSON.stringify(wishlist))
-  if(wishlist)
-  alert(" product added to wishlist")
-    }
+    const addwishlist=(item)=>{
+        const Product = [...wishlist,item?.products];
+        if(!user)
+        {
+
+          const userid=prompt("enter the user id")
+          if(userid)
+          {
+            const cartprod = {
+              userid: userid,
+              product: [{...item}],
+            };
+          setuser(userid)
+          sessionStorage.setItem("user",JSON.stringify(userid))
+          wishlist.push(cartprod);
+          setwishlist(wishlist)
+          localStorage.setItem("wishlist",JSON.stringify(wishlist))
+          if(wishlist)
+          alert(`product added to wishlist of user ${user}`)
+          }
+          else
+          {
+            alert("please enter the user id")  
+          }
+        }
+        else{
+          const cartprod = {
+            userid: user,
+            product: [{ ...item}],
+          };
+        wishlist.push(cartprod);
+        setwishlist(wishlist)
+        localStorage.setItem("wishlist",JSON.stringify(wishlist))
+        if(wishlist)
+        alert(` product added to wishlist of user${user}`)
+        }
+      };
+      
   return (
-    <>
+    <> {!items || !items.length > 0 ? <div className="container fa-2x d-flex flex-column justify-content-center align-items-center"><div> your cart is empty</div> 
+               <div className="button"><button className='sm-button text-uppercase bold_font' onClick={()=>handleshopping()}>shopping</button></div></div> :
        <div className="container-cart d-block d-lg-flex">
      
     <div className="overflow-y col-12 col-lg-8 me-4 ">
@@ -179,14 +217,14 @@ console.log(selectedQty)
   {/* product deatils */}
 <div className="">
   <div>
-    {items ? items.map((item) => (
-      <div className="container-ecom d-" key={item.product[0].id}>
+    {items ? items.map((item,index) => (
+      <div className="container-ecom d-">
         <div className="p-0 col-12 d-block">
-          <div className="d-flex">
+          <div key={index} className="d-flex">
           {item.product[0].product_images.map((image, index) =>
             index === 0 && (
-              <div key={image.id} className="cart-img-sm col-3 col-sm-3 col-lg-3 col-xl-3">
-                <img src={image.image_path} alt="image2" />
+              <div key={image.id} className="cart-img-sm col-4 col-sm-3 col-lg-3 col-xl-3">
+                <img src={image.image_path_1 || image.image_path} alt="image2" />
               </div>
             )
           )}
@@ -347,7 +385,7 @@ console.log(selectedQty)
         {product?.product_images.map((product,index)=>
         index==0 &&
         <div key={index} className="productImageContainer position-relative">
-         <img  className="sm-product-image" src={product.image_path_1}/>
+         <img  className="sm-product-image" src={product.image_path_1 || product.image_path}/>
          <div className="label new">New</div>
             <div className="product-heart"> 
                   <span
@@ -364,8 +402,8 @@ console.log(selectedQty)
     {product?.product_images.map((product,index)=>
         index<2 &&
               <div className="productImageContainer" onClick={()=>onImageClick(product)}>
-              <img src={product.image_path_1} alt={product.name} className="productImage1" />
-          <img src={product.image_path_2} alt={product.name} className="productImage1 productImage2" />
+              <img src={product.image_path_1 || product.image_path} alt={product.name} className="productImage1" />
+          <img src={product.image_path_2 || product.image_path} alt={product.name} className="productImage1 productImage2" />
           </div>
     )}
               <div className="label new">New</div>         
@@ -479,7 +517,7 @@ console.log(selectedQty)
 </div></div>:<div></div>}
 
 </div>
-    </>
+}</>
   );
 }
 

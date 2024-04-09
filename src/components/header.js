@@ -102,6 +102,7 @@ import { CgProfile } from "react-icons/cg";
 import { Accordion, Col, Dropdown, DropdownItem, Row } from 'react-bootstrap';
 import apiService from '../services/axiosService.js';
 import apiConfig from '../services/apiConfig.js';
+import Contactus from './Contactus.js';
 
 
 export default function Header({ hideCarousel }){
@@ -248,7 +249,7 @@ export default function Header({ hideCarousel }){
     </div>
         <div  className="col-4 track">
           <sapn>Track Orders</sapn>
-            <span>Contact Us</span></div>
+            <span ><Link to="/contactus" path={<Contactus />} className="text-decoration-none text-white" >Contact Us</Link></span></div>
       </div></div>
       <div className="position-fix d-lg-flex">
         {['lg'].map((expand) => (
@@ -324,7 +325,7 @@ export default function Header({ hideCarousel }){
                     <ul>
                       <li>My Account</li>
                       <li>My Orders</li>
-                      <li>Contact Us</li>
+                      <li><Link to="/contactus" path={<Contactus />}>Contact Us</Link></li>
                       <li>FAQs</li>
                       <li>community Initiatives</li>
                     </ul>

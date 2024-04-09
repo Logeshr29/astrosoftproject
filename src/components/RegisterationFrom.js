@@ -86,7 +86,7 @@ const RegisterationForm=()=>{
   return (
     <div className="container-ecom">
       <div className="form">
-      <h1 className="">Registeration Form</h1>
+      <h2 className="text-center">REGISTRATION</h2>
 
       <Formik
           initialValues={{
@@ -101,7 +101,7 @@ const RegisterationForm=()=>{
         >
           <Form>
             <div className="mb-3">
-              <label htmlFor="firstName">First Name</label>
+              <label htmlFor="firstName" className="font">First Name</label>
               <Field
                 type="text"
                 name="firstName"
@@ -116,7 +116,7 @@ const RegisterationForm=()=>{
             </div>
 
             <div className="mb-3">
-              <label htmlFor="lastName text-tomato">Last Name</label>
+              <label htmlFor="lastName text-tomato" className="font">Last Name</label>
               <Field
                 type="text"
                 name="lastName"
@@ -131,7 +131,7 @@ const RegisterationForm=()=>{
             </div>
 
             <div className="mb-3">
-              <label htmlFor="mobileNumber">Mobile Number</label>
+              <label htmlFor="mobileNumber" className="font">Mobile Number</label>
               <Field
                 type="number"
                 name="mobileNumber"
@@ -146,7 +146,7 @@ const RegisterationForm=()=>{
             </div>
 
             <div className="mb-3">
-              <label htmlFor="email">Email Id</label>
+              <label htmlFor="email" className="font">Email Id</label>
               <Field
                 type="email"
                 name="email"
@@ -161,7 +161,7 @@ const RegisterationForm=()=>{
             </div>
 
             <div className="mb-3">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password" className="font">Password</label>
               <Field
                 type="password"
                 name="password"
@@ -176,7 +176,7 @@ const RegisterationForm=()=>{
             </div>
 
             {/* Gender and Submit button here */}
-            <div className="submit-btn1">
+            <div className="submit-btn1 ">
               <button
                 type="submit"
                 className="sm-button text-uppercase bold_font"

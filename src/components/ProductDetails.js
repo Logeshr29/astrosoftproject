@@ -240,7 +240,6 @@ useEffect(() => {
         // Function to show the alert
 
       const addwishlist=(item)=>{
-        const Product = [...wishlist,item?.products];
         if(!user)
         {
 
@@ -264,18 +263,32 @@ useEffect(() => {
             alert("please enter the user id")  
           }
         }
-        else{
-          const cartprod = {
-            userid: user,
-            product: [{ ...item}],
-          };
-        wishlist.push(cartprod);
-        setwishlist(wishlist)
-        localStorage.setItem("wishlist",JSON.stringify(wishlist))
-        if(wishlist)
-        alert(` product added to wishlist of user${user}`)
-        }
-      };
+        else
+              {
+              const cartprod = {
+                userid: user,
+                product: [{ ...item}],
+              };const productalready = wishlist.some(
+                (cartItem) =>
+                  cartItem.userid === user && cartItem.product[0].id === cartprod.product[0].id
+              );
+              if (productalready) {
+                alert("The product is already in the cart");
+              } 
+              else{
+                const cartprod = {
+                  userid: user,
+                  product: [{ ...item}],
+                };
+              wishlist.push(cartprod);
+              setwishlist(wishlist)
+              localStorage.setItem("wishlist",JSON.stringify(wishlist))
+              if(wishlist)
+              alert(` product added to wishlist of user${user}`)
+              }
+            };
+          }
+ 
       
 
 
@@ -396,14 +409,14 @@ useEffect(() => {
           <div className="addcart-btn">
             {selectedSize !== null ? (
               <button
-                onClick={() =>addwishlist(productdetail)}
+                onClick={() =>addwishlist(productdetail.products)}
                 className={'sm-button text-uppercase bold_font'}
               >
                 WISHLIST
               </button>
             ) : (
               <button
-                onClick={() =>  addtoCart1(productdetail)}
+                onClick={() =>  addtoCart1(productdetail.products)}
                 className={'sm-button text-uppercase bold_font'}
               >
                WISHLIST
@@ -472,7 +485,7 @@ useEffect(() => {
             </SlickSlider>
           </div>
           {/* productlist-lg */}
-          <div className="productImage d-none d-md-flex">
+          <div className="productImage d-none d-lg-flex">
             {product?.product_images.map((product, index) =>
               index < 2 &&
               <div key={index} className="productImageContainer " onClick={() => onImageClick(product)}>
@@ -544,7 +557,7 @@ useEffect(() => {
               </div>
 
           </div></div>
-  </div>: <div className="loader"></div>
+  </div>: <div className="container-loader"><div className="loader"></div></div>
 );
             } 
 

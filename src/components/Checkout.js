@@ -17,7 +17,7 @@ import { ModalHeader } from 'react-bootstrap';
 import AddressPayment from './AddressPayment';
 
 
-export default  function Checkout(){
+  const Checkout=(props)=>{
   const sliderRef = useRef(null);
   const navigate = useNavigate();
   const validationSchema = Yup.object().shape({
@@ -356,7 +356,7 @@ Cash on Delivery
     <tbody className='table-body'>
       <tr>
         <td>Cart Total</td>
-        <td><span className="price-amt">₹ 3597.3</span></td>
+        <td><span className="price-amt">₹ {props.carttotal}</span></td>
       </tr>
       <tr>
         <td>Member Discount</td>
@@ -364,7 +364,7 @@ Cash on Delivery
       </tr>
       <tr>
         <td>GST</td>
-        <td><span className="price-amt">₹ 395.63</span></td>
+        <td><span className="price-amt">₹ {props.gstamount}</span></td>
       </tr>
       <tr>
         <td>Shipping Charges</td>
@@ -372,7 +372,7 @@ Cash on Delivery
       </tr>
       <tr>
         <td className='fbold'>Total Amount</td>
-        <td><span className="price-amt">₹ 3593.00</span></td>
+        <td><span className="price-amt">₹ {props.carttotal+props.gstamount}</span></td>
       </tr>
     </tbody>
   </table>
@@ -387,3 +387,4 @@ Cash on Delivery
 </div></div>
 );
 }
+export default Checkout

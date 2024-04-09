@@ -22,6 +22,7 @@ import KidsCategories from './KidsCategories';
 import Deliveryaddress from './Deliveryaddress';
 import Footer from './Footer';
 import Wishlist from './Wishlist';
+import Contactus from './Contactus';
 
 function Home() {
 /*   const [hideCarousel, setHideCarousel] = useState(true);
@@ -77,6 +78,7 @@ function Home() {
         <Route path="/kids-product-list" element={<KidsProductList/>} />
         <Route path="/kids-product-details" element={<KidsProductDetails/>} />
         <Route path="/checkout" element={<Checkout/>} />
+        <Route path="/contactus" element={<Contactus/>} />
         <Route path="/cart" element={<Cart />} />
         <Route path='/deliveryaddress' element={<Deliveryaddress />}/>
         <Route path="/loginform" element={<LoginForm/>}/>
